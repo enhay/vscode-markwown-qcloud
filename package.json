@@ -1,0 +1,58 @@
+{
+  "name": "hello-extension",
+  "displayName": "hello-extension",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.30.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.qcloud.select",
+        "title": "addImage"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.qcloud.select",
+        "key": "shift+o",
+        "mac": "shift+o",
+        "when": "editorTextFocus && editorLangId == 'markdown'"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "extension.qcloud.select",
+          "when": "editorLangId == 'markdown'"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "typescript": "^3.1.4",
+    "vscode": "^1.1.25",
+    "eslint": "^4.11.0",
+    "@types/node": "^8.10.25",
+    "@types/mocha": "^2.2.42"
+  },
+  "dependencies": {
+    "@types/mime-types": "^2.1.0",
+    "@types/moment": "^2.13.0",
+    "cos-nodejs-sdk-v5": "^2.5.6",
+    "mime-types": "^2.1.21",
+    "moment": "^2.23.0"
+  }
+}
