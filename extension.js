@@ -5,19 +5,30 @@ const { window, commands, workspace } = require('vscode');
 const moment = require('moment')
 const path = require('path')
 const uploader = require('./lib/upload')
+const utils = require('./lib/util')
+const fs = require('fs')
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+function saveLocal(source, dist) {
+  fs.createReadStream(source).pipe(fs.createWriteStream(dist))
+}
 
 async function upload(config, fsPath) {
   const editor = window.activeTextEditor
   const mdFilePath = editor.document.fileName
   const mdFileName = path.basename(mdFilePath, path.extname(mdFilePath))
   const imgName = path.basename(fsPath, path.extname(fsPath))
-  const fileName = `${mdFileName}/${moment().format("YYYYMMDD_HHmmss")}${path.extname(fsPath)}`
-  const imgurl = await uploader.upload(config, fsPath, fileName)
+  const fileName = `${mdFileName}_${moment().format("YYYYMMDD_HHmmss")}${path.extname(fsPath)}`
+  // 当前路径的绝对路径
+  let imgUrl = `/${config.path}/${fileName}`
+  const saveType = config.enable;
+  if (saveType === "all" || saveType === "qcloud") {
+    imgUrl = await uploader.qUpload(utils.coverConfig(config), fsPath, fileName)
+  }
+  if (saveType === "all" || saveType === "local") {
+    await saveLocal(fsPath, imgUrl)
+  }
   editor.edit(textEditorEdit => {
-    const txt = `![${imgName}](${imgurl})`
+    const txt = `![${imgName}](${imgUrl})`
     textEditorEdit.insert(editor.selection.active, txt)
   })
 }
@@ -28,12 +39,12 @@ async function upload(config, fsPath) {
  */
 function activate(context) {
 
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  // This line of code will only be executed once when your extension is activated
-  console.log('Congratulations, your extension "hello-extension" is now active!');
-  const config = workspace.getConfiguration('hugo-qcloud')
+  const config = workspace.getConfiguration('hugoImage')
+  if (config.enable === 'off') {
+    return;
+  }
 
-  const select = commands.registerCommand('extension.qcloud.select', async () => {
+  const select = commands.registerCommand('extension.hugoImage.select', async () => {
     const result = await window.showOpenDialog({
       filters: { 'Images': ['png', 'jpg', 'gif', 'bmp'] }
     });

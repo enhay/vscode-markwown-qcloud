@@ -16,13 +16,13 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.qcloud.select",
-        "title": "addImage"
+        "command": "extension.hugoImage.select",
+        "title": "上传图片"
       }
     ],
     "keybindings": [
       {
-        "command": "extension.qcloud.select",
+        "command": "extension.hugoImage.select",
         "key": "shift+o",
         "mac": "shift+o",
         "when": "editorTextFocus && editorLangId == 'markdown'"
@@ -31,10 +31,51 @@
     "menus": {
       "editor/context": [
         {
-          "command": "extension.qcloud.select",
+          "command": "extension.hugoImage.select",
           "when": "editorLangId == 'markdown'"
         }
       ]
+    }
+  },
+  "configuration": {
+    "type": "object",
+    "title": "hugoImage configuration",
+    "properties": {
+      "hugoImage.enable": {
+        "type": "string",
+        "default": "all",
+        "description": "腾讯图片上传工具开关"
+      },
+      "hugoImage.secretId": {
+        "type": "string",
+        "default": "",
+        "description": "腾讯COS SecretId。"
+      },
+      "hugoImage.secretKey": {
+        "type": "string",
+        "default": "",
+        "description": "腾讯COS SecretKey。"
+      },
+      "hugoImage.bucket": {
+        "type": "string",
+        "default": "",
+        "description": "腾讯COS容器Bucket。"
+      },
+      "hugoImage.region": {
+        "type": "string",
+        "default": "",
+        "description": "腾讯COS Region。"
+      },
+      "hugoImage.domain": {
+        "type": "string",
+        "default": "",
+        "description": "腾讯图床自定义域名。"
+      },
+      "hugoImage.save": {
+        "type": "string",
+        "default": "${currentFileDir}",
+        "description": "文件本地保存位置"
+      }
     }
   },
   "scripts": {
