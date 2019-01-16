@@ -1,8 +1,9 @@
 {
-  "name": "hello-extension",
-  "displayName": "hello-extension",
+  "name": "qcloud-image-upload",
+  "displayName": "qcloud-image-upload",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "publisher": "zhaohua",
   "engines": {
     "vscode": "^1.30.0"
   },
@@ -35,48 +36,55 @@
           "when": "editorLangId == 'markdown'"
         }
       ]
-    }
-  },
-  "configuration": {
-    "type": "object",
-    "title": "qcloudImage configuration",
-    "properties": {
-      "qcloudImage.enable": {
-        "type": "string",
-        "default": "all",
-        "description": "腾讯图片上传工具开关"
-      },
-      "qcloudImage.secretId": {
-        "type": "string",
-        "default": "",
-        "description": "腾讯COS SecretId。"
-      },
-      "qcloudImage.secretKey": {
-        "type": "string",
-        "default": "",
-        "description": "腾讯COS SecretKey。"
-      },
-      "qcloudImage.bucket": {
-        "type": "string",
-        "default": "",
-        "description": "腾讯COS容器Bucket。"
-      },
-      "qcloudImage.region": {
-        "type": "string",
-        "default": "",
-        "description": "腾讯COS Region。"
-      },
-      "qcloudImage.domain": {
-        "type": "string",
-        "default": "",
-        "description": "腾讯图床自定义域名。"
-      },
-      "qcloudImage.basePath": {
-        "type": "string",
-        "default": "",
-        "description": "本地保存位置"
+    },
+    "configuration": [
+      {
+        "title": "qcloudImage configuration",
+        "properties": {
+          "qcloudImage.enable": {
+            "type": "string",
+            "enum": [
+              "all",
+              "off",
+              "qcloud",
+              "local"
+            ],
+            "default": "all",
+            "description": "图片上传开关"
+          },
+          "qcloudImage.secretId": {
+            "type": "string",
+            "default": "",
+            "description": "腾讯COS SecretId。"
+          },
+          "qcloudImage.secretKey": {
+            "type": "string",
+            "default": "",
+            "description": "腾讯COS SecretKey。"
+          },
+          "qcloudImage.bucket": {
+            "type": "string",
+            "default": "",
+            "description": "腾讯COS容器Bucket。"
+          },
+          "qcloudImage.region": {
+            "type": "string",
+            "default": "",
+            "description": "腾讯COS Region。"
+          },
+          "qcloudImage.domain": {
+            "type": "string",
+            "default": "",
+            "description": "腾讯图床自定义域名。"
+          },
+          "qcloudImage.basePath": {
+            "type": "string",
+            "default": "",
+            "description": "本地保存位置"
+          }
+        }
       }
-    }
+    ]
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
