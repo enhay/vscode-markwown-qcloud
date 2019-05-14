@@ -8,12 +8,12 @@ const uploader = require('./lib/upload')
 const utils = require('./lib/util')
 const fs = require('fs')
 
-async function saveLocal(source, basePath = '', fileName) {
+async function saveLocal(source, localPath = '', fileName) {
   if (workspace.workspaceFolders === null) {
     return;
   }
   const workDir = workspace.workspaceFolders[0].uri.fsPath
-  const dist = path.join(workDir, basePath, fileName);
+  const dist = path.join(workDir, localPath, fileName);
   fs.createReadStream(source).pipe(fs.createWriteStream(dist))
     .on("error", (e) => {
       throw e;
@@ -32,7 +32,7 @@ async function upload(config, fsPath) {
   let imgUrl
   // 保存本地
   if (saveType === "all" || saveType === "local") {
-    imgUrl = await saveLocal(fsPath, config.basePath, fileName)
+    imgUrl = await saveLocal(fsPath, config.localPath, fileName)
   }
   // 上传qcloud
   if (saveType === "all" || saveType === "qcloud") {

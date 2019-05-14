@@ -1,6 +1,6 @@
 {
   "name": "qcloud-image-upload",
-  "displayName": "qcloud-image-upload",
+  "displayName": "MD腾讯云助手",
   "description": "",
   "version": "0.0.2",
   "publisher": "zhaohua",
@@ -65,19 +65,14 @@
           "qcloudImage.bucket": {
             "type": "string",
             "default": "",
-            "description": "腾讯COS容器Bucket。"
-          },
-          "qcloudImage.region": {
-            "type": "string",
-            "default": "",
-            "description": "腾讯COS Region。"
+            "description": "腾讯COS容器Bucket。使用Bucket@region格式"
           },
           "qcloudImage.domain": {
             "type": "string",
             "default": "",
             "description": "腾讯图床自定义域名。"
           },
-          "qcloudImage.basePath": {
+          "qcloudImage.localPath": {
             "type": "string",
             "default": "",
             "description": "本地保存位置"
